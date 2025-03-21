@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loja Online - Sua Melhor Escolha</title>
+  <style>
+    /* Reset e estilos gerais */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      color: #333;
+      background-color: #f8f9fa;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    section {
+      padding: 80px 0;
+    }
+    
+    h2 {
+      font-size: 2.5rem;
+      margin-bottom: 30px;
+      text-align: center;
+      color: #2c3e50;
+    }
+    
+    /* Header */
+    header {
+      background-color: #fff;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 0;
+    }
+    
+    .logo {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #3498db;
+    }
+    
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    
+    nav ul li {
+      margin-left: 30px;
+    }
+    
+    nav ul li a {
+      text-decoration: none;
+      color: #2c3e50;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    
+    nav ul li a:hover {
+      color: #3498db;
+    }
+    
+    .cart-icon {
+      position: relative;
+      cursor: pointer;
+    }
+    
+    .cart-count {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      background-color: #e74c3c;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.75rem;
+    }
+    
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(44, 62, 80, 0.7), rgba(44, 62, 80, 0.7)), url('/api/placeholder/1200/600') center/cover no-repeat;
+      height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+    }
+    
+    .hero-content h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+    }
+    
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background-color: #3498db;
+      color: white;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+    
+    .btn:hover {
+      background-color: #2980b9;
+    }
+    
+    /* Categorias */
+    .categories {
+      background-color: white;
+    }
+    
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    
+    .category-card {
+      text-align: center;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: #f8f9fa;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .category-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .category-icon {
+      font-size: 2rem;
+      color: #3498db;
+      margin-bottom: 15px;
+    }
+    
+    /* Produtos em destaque */
+    .featured-products {
+      background-color: #f8f9fa;
+    }
+    
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 30px;
+    }
+    
+    .product-card {
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s;
+    }
+    
+    .product-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .product-image {
+      height: 200px;
+      background-color: #f1f2f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .product-info {
+      padding: 20px;
+    }
+    
+    .product-title {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    
+    .product-price {
+      color: #e74c3c;
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 15px;
+    }
+    
+    .add-to-cart {
+      width: 100%;
+      padding: 10px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .add-to-cart:hover {
+      background-color: #2980b9;
+    }
+    
+    /* Promoções */
+    .promotions {
+      background-color: white;
+    }
+    
+    .promotion-banner {
+      background: linear-gradient(to right, #3498db, #2c3e50);
+      border-radius: 10px;
+      padding: 40px;
+      color: white;
+      text-align: center;
+    }
+    
+    .promotion-banner h3 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+    }
+    
+    .promotion-banner p {
+      margin-bottom: 25px;
+      font-size: 1.1rem;
+    }
+    
+    /* Sobre nós */
+    .about {
+      background-color: #f8f9fa;
+    }
+    
+    .about-content {
+      display: flex;
+      align-items: center;
+      gap: 50px;
+    }
+    
+    .about-image {
+      flex: 1;
+      height: 400px;
+      background-color: #ddd;
+      border-radius: 10px;
+    }
+    
+    .about-text {
+      flex: 1;
+    }
+    
+    .about-text h3 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+    
+    .about-text p {
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+    
+    /* Avaliações */
+    .testimonials {
+      background-color: white;
+    }
+    
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    
+    .testimonial-card {
+      background-color: #f8f9fa;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .testimonial-text {
+      font-style: italic;
+      margin-bottom: 20px;
+      line-height: 1.6;
+    }
+    
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: #ddd;
+    }
+    
+    .author-info h4 {
+      font-size: 1rem;
+      margin-bottom: 5px;
+    }
+    
+    .author-info p {
+      color: #7f8c8d;
+      font-size: 0.9rem;
+    }
+    
+    /* Newsletter */
+    .newsletter {
+      background-color: #2c3e50;
+      color: white;
+      text-align: center;
+      padding: 60px 0;
+    }
+    
+    .newsletter h2 {
+      color: white;
+    }
+    
+    .newsletter p {
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+    
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    
+    .newsletter-input {
+      flex: 1;
+      padding: 12px 15px;
+      border: none;
+      border-radius: 4px 0 0 4px;
+    }
+    
+    .newsletter-btn {
+      padding: 12px 25px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    
+    /* FAQ */
+    .faq {
+      background-color: #f8f9fa;
+    }
+    
+    .faq-item {
+      margin-bottom: 20px;
+      background-color: white;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+    }
+    
+    .faq-question {
+      padding: 20px;
+      background-color: #3498db;
+      color: white;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    
+    .faq-answer {
+      padding: 20px;
+      line-height: 1.6;
+    }
+    
+    /* Footer */
+    footer {
+      background-color: #2c3e50;
+      color: white;
+      padding: 60px 0 30px;
+    }
+    
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    
+    .footer-column h3 {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: #3498db;
+    }
+    
+    .footer-links li {
+      margin-bottom: 10px;
+      list-style: none;
+    }
+    
+    .footer-links a {
+      color: #ecf0f1;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .footer-links a:hover {
+      color: #3498db;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      background-color: #34495e;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background-color 0.3s;
+    }
+    
+    .social-icon:hover {
+      background-color: #3498db;
+    }
+    
+    .footer-bottom {
+      border-top: 1px solid #34495e;
+      padding-top: 20px;
+      text-align: center;
+    }
+    
+    /* Responsividade */
+    @media (max-width: 992px) {
+      .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .testimonial-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .about-content {
+        flex-direction: column;
+      }
+      
+      .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 2.5rem;
+      }
+      
+      .testimonial-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .about-image {
+        height: 300px;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .category-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .footer-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .newsletter-form {
+        flex-direction: column;
+      }
+      
+      .newsletter-input, .newsletter-btn {
+        width: 100%;
+        border-radius: 4px;
+      }
+      
+      .newsletter-btn {
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">StoreWeb</div>
+        <nav>
+          <ul>
+            <li><a href="#home">Início</a></li>
+            <li><a href="#categories">Categorias</a></li>
+            <li><a href="#products">Produtos</a></li>
+            <li><a href="#about">Sobre</a></li>
+            <li><a href="#contact">Contato</a></li>
+          </ul>
+        </nav>
+        <div class="cart-icon">
+          🛒
+          <span class="cart-count">0</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Encontre os Melhores Produtos</h1>
+        <p>Uma experiência de compra única com os produtos mais inovadores do mercado e preços imbatíveis.</p>
+        <a href="#products" class="btn">Ver Ofertas</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categorias -->
+  <section class="categories" id="categories">
+    <div class="container">
+      <h2>Categorias</h2>
+      <div class="category-grid">
+        <div class="category-card">
+          <div class="category-icon">📱</div>
+          <h3>Eletrônicos</h3>
+          <p>Smartphones, tablets e acessórios</p>
+        </div>
+        <div class="category-card">
+          <div class="category-icon">👕</div>
+          <h3>Moda</h3>
+          <p>Roupas, calçados e acessórios</p>
+        </div>
+        <div class="category-card">
+          <div class="category-icon">🏠</div>
+          <h3>Casa & Jardim</h3>
+          <p>Móveis, decoração e itens para o lar</p>
+        </div>
+        <div class="category-card">
+          <div class="category-icon">🖥️</div>
+          <h3>Informática</h3>
+          <p>Computadores, notebooks e acessórios</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Produtos em destaque -->
+  <section class="featured-products" id="products">
+    <div class="container">
+      <h2>Produtos em Destaque</h2>
+      <div class="product-grid">
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/api/placeholder/250/200" alt="Produto 1" />
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Smartphone UltraX Pro</h3>
+            <div class="product-price">R$ 1.999,00</div>
+            <button class="add-to-cart">Adicionar ao Carrinho</button>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/api/placeholder/250/200" alt="Produto 2" />
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Notebook LightBook Air</h3>
+            <div class="product-price">R$ 3.499,00</div>
+            <button class="add-to-cart">Adicionar ao Carrinho</button>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/api/placeholder/250/200" alt="Produto 3" />
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Fone de Ouvido SoundPlus</h3>
+            <div class="product-price">R$ 299,00</div>
+            <button class="add-to-cart">Adicionar ao Carrinho</button>
+          </div>
+        </div>
+        <div class="product-card">
+          <div class="product-image">
+            <img src="/api/placeholder/250/200" alt="Produto 4" />
+          </div>
+          <div class="product-info">
+            <h3 class="product-title">Relógio Smartwatch Pro</h3>
+            <div class="product-price">R$ 499,00</div>
+            <button class="add-to-cart">Adicionar ao Carrinho</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Promoções -->
+  <section class="promotions">
+    <div class="container">
+      <div class="promotion-banner">
+        <h3>Promoção de Lançamento</h3>
+        <p>Aproveite 20% de desconto em todos os produtos até o final do mês!</p>
+        <a href="#products" class="btn">Ver Ofertas</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sobre nós -->
+  <section class="about" id="about">
+    <div class="container">
+      <h2>Sobre Nós</h2>
+      <div class="about-content">
+        <div class="about-image">
+          <img src="/api/placeholder/500/400" alt="Nossa Equipe" />
+        </div>
+        <div class="about-text">
+          <h3>Nossa História</h3>
+          <p>Fundada em 2020, a StoreWeb nasceu com a missão de oferecer produtos de qualidade com preços acessíveis. Iniciamos como uma pequena loja virtual e hoje atendemos clientes em todo o Brasil.</p>
+          <p>Nossa equipe é formada por especialistas apaixonados por tecnologia e inovação, sempre buscando as melhores soluções para nossos clientes.</p>
+          <p>Trabalhamos com as melhores marcas do mercado e garantimos a qualidade de todos os nossos produtos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Avaliações -->
+  <section class="testimonials">
+    <div class="container">
+      <h2>O Que Dizem Nossos Clientes</h2>
+      <div class="testimonial-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "Comprei um smartphone e fiquei impressionado com a rapidez da entrega. Produto chegou em perfeito estado e o atendimento foi excelente!"
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar"></div>
+            <div class="author-info">
+              <h4>Carlos Silva</h4>
+              <p>São Paulo, SP</p>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "Já fiz várias compras nesta loja e sempre fico satisfeita. Os preços são ótimos e a qualidade dos produtos é excepcional."
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar"></div>
+            <div class="author-info">
+              <h4>Ana Oliveira</h4>
+              <p>Rio de Janeiro, RJ</p>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card">
+          <div class="testimonial-text">
+            "Atendimento rápido e eficiente. Tive um problema com minha compra e a equipe resolveu imediatamente. Recomendo a todos!"
+          </div>
+          <div class="testimonial-author">
+            <div class="author-avatar"></div>
+            <div class="author-info">
+              <h4>Pedro Santos</h4>
+              <p>Belo Horizonte, MG</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter">
+    <div class="container">
+      <h2>Fique por Dentro das Novidades</h2>
+      <p>Inscreva-se em nossa newsletter e receba ofertas exclusivas diretamente no seu e-mail.</p>
+      <form class="newsletter-form">
+        <input type="email" class="newsletter-input" placeholder="Seu melhor e-mail" required>
+        <button type="submit" class="newsletter-btn">Inscrever-se</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq" id="faq">
+    <div class="container">
+      <h2>Perguntas Frequentes</h2>
+      <div class="faq-item">
+        <div class="faq-question">Como faço para realizar uma compra?</div>
+        <div class="faq-answer">
+          Para realizar uma compra, basta escolher o produto desejado, clicar em "Adicionar ao Carrinho" e seguir o processo de checkout. Você pode pagar com cartão de crédito, boleto bancário ou PIX.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Qual o prazo de entrega?</div>
+        <div class="faq-answer">
+          O prazo de entrega varia de acordo com a sua localização. Geralmente, as entregas são realizadas em até 7 dias úteis após a confirmação do pagamento.
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-question">Como funciona a garantia dos produtos?</div>
+        <div class="faq-answer">
+          Todos os nossos produtos possuem garantia de fábrica. Além disso, oferecemos 7 dias para devolução em caso de arrependimento ou defeito.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="contact">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>StoreWeb</h3>
+          <ul class="footer-links">
+            <li>Sobre Nós</li>
+            <li>Nossa Equipe</li>
+            <li>Trabalhe Conosco</li>
+            <li>Notícias</li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Produtos</h3>
+          <ul class="footer-links">
+            <li><a href="#">Eletrônicos</a></li>
+            <li><a href="#">Moda</a></li>
+            <li><a href="#">Casa & Jardim</a></li>
+            <li><a href="#">Informática</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Suporte</h3>
+          <ul class="footer-links">
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Política de Privacidade</a></li>
+            <li><a href="#">Termos de Uso</a></li>
+            <li><a href="#">Trocas e Devoluções</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h3>Contato</h3>
+          <ul class="footer-links">
+            <li>contato@storeweb.com.br</li>
+            <li>(11) 99999-9999</li>
+            <li>Av. Paulista, 1000 - São Paulo/SP</li>
+          </ul>
+          <div class="social-links">
+            <a href="#" class="social-icon">f</a>
+            <a href="#" class="social-icon">t</a>
+            <a href="#" class="social-icon">in</a>
+            <a href="#" class="social-icon">ig</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 StoreWeb - Todos os direitos reservados</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Script simples para o contador do carrinho
+    document.addEventListener('DOMContentLoaded', function() {
+      const addToCartButtons = document.querySelectorAll('.add-to-cart');
+      const cartCount = document.querySelector('.cart-count');
+      
+      let count = 0;
+      
+      addToCartButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          count++;
+          cartCount.textContent = count;
+          
+          // Animação simples
+          button.textContent = 'Adicionado ✓';
+          button.style.backgroundColor = '#27ae60';
+          
+          setTimeout(() => {
+            button.textContent = 'Adicionar ao Carrinho';
+            button.style.backgroundColor = '#3498db';
+          }, 1000);
+        });
+      });
+      
+      // Mostrar/ocultar respostas de FAQ
+      const faqQuestions = document.querySelectorAll('.faq-question');
+      
+      faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+          const answer = this.nextElementSibling;
+          
+          if (answer.style.display === 'block') {
+            answer.style.display = 'none';
+          } else {
+            // Ocultar todas as respostas
+            document.querySelectorAll('.faq-answer').forEach(item => {
+              item.style.display = 'none';
+            });
+            
+            // Mostrar apenas a resposta atual
+            answer.style.display = 'block';
+          }
+        });
+      });
+      
+      // Inicialmente ocultar todas as respostas
+      document.querySelectorAll('.faq-answer').forEach(item => {
+        item.style.display = 'none';
+      });
+    });
+  </script>
+</body>
+</html>
